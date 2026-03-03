@@ -73,6 +73,7 @@
 2. **表情命名**: 表情文件需要使用特定的名称，如`happy.gif`、`sad.gif`等
 3. **表情尺寸**: 表情文件尺寸应为160x160像素
 4. **支持的表情名称**: neutral, happy, laughing, funny, sad, angry, crying, loving, embarrassed, surprised, shocked, thinking, winking, cool, relaxed, delicious, kissy, confident, sleepy, silly, confused
+更多配置在README_FIX_EMOJI.md中
 
 ### 背光调整
 
