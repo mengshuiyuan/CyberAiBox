@@ -4,12 +4,33 @@
 
 双屏显示板项目是一个基于ESP32-S3的双屏幕设备，支持显示表情、文本消息、状态信息等，具备网络连接、语音交互、姿态检测等功能。
 
+## 目录 (Table of Contents)
+
+1. [项目概述](#项目概述)
+2. [目录结构](#目录结构)
+3. [双屏板硬件介绍](#双屏板硬件介绍)
+4. [软件功能](#软件功能)
+   - [核心功能](#核心功能)
+   - [表情资源配置](#表情资源配置)
+   - [背光调整](#背光调整)
+5. [快速开始指南](#快速开始指南)
+6. [开发指南](#开发指南)
+7. [常见问题](#常见问题)
+8. [版本历史](#版本历史)
+9. [贡献指南](#贡献指南)
+10. [许可证](#许可证)
+11. [联系方式](#联系方式)
+12. [致谢](#致谢)
+
+
 ## 目录结构
 
 ```
+
+- 板级详细说明: [docs/board-cyberai-toy-lily-4G-2.md](docs/board-cyberai-toy-lily-4G-2.md)
 /esp-project/binocular-display-of-lily-rabbit/
 ├── main/
-│   ├── boards/dual-screen/    # 双屏板相关代码
+│   ├── boards/cyberai-toy-lily-4G-2/    # 双屏板相关代码
 │   ├── display/               # 显示相关代码
 │   ├── audio/                 # 音频相关代码
 │   ├── led/                   # LED相关代码
@@ -18,6 +39,36 @@
 ├── scripts/                   # 脚本文件
 ├── CMakeLists.txt             # 构建配置
 └── README.md                  # 项目说明文档
+
+# 板级说明 — main/boards/cyberai-toy-lily-4G-2
+
+下面是 `main/boards/cyberai-toy-lily-4G-2` 目录中主要文件的结构与功能说明，便于开发者定位与定制。
+
+- document.md: 板级用户与功能说明（按钮、触摸、RGB 灯光、模式切换等）。
+- config.h: 板级引脚与常量配置（显示引脚、I2S 音频引脚、I2C、ADC 通道、电池电压定义、4G UART、触摸通道、RGB 引脚等）。修改硬件映射优先在此文件进行。
+- dual-screen.cc: 该板的主实现文件，包含 `CyberAiDualScreen` 类。负责：
+  - 初始化 I2C/SPI/ADC、显示驱动（双屏 GC9D01）、按键与触摸回调。  
+  - IMU（QMI8658）初始化与摇晃/撞击/方向检测逻辑。  
+  - BMS（bq27220）电量管理与 ADC 校准/读取。  
+  - 网络类型切换（WiFi / ML307 4G）和按键双击逻辑。  
+
+- qmi8658.c / qmi8658.h: QMI8658 IMU 驱动，提供初始化、加速度/陀螺/温度读取、传感器配置和唤醒功能。用于姿态与摇晃检测。
+- touch.cc / touch.h: 铜箔触摸传感器逻辑，包含通道初始化、中断/队列处理、去抖与触摸计数，以及触摸触发的情绪反应（显示/唤醒/语音）。
+- ws2812b_controller.cc / ws2812b_controller.h: WS2812B 灯带控制器的面向对象实现。提供：多种动画（呼吸、彩虹、追逐、闪烁）、亮度控制、根据设备状态自动映射颜色，以及通过 MCP 暴露的远程控制工具。
+- led.c / led.h: 基于 RMT 的简单 LED demo 任务，适合硬件验证或调试。
+
+如何定制：
+
+- 更改引脚或外设映射：编辑 `config.h`，并在 `dual-screen.cc` 中确认初始化使用相同常量。  
+- 修改触摸反应：在 `touch.cc` 中调整反应文本与触发阈值。  
+- 添加 LED 动画：在 `ws2812b_controller.*` 中实现新动画并在 Board 初始化中使用或通过 MCP 注册。  
+- 调整姿态检测：使用 `qmi8658` 提供的接口并在 `dual-screen.cc` 中修改阈值与滤波参数。
+
+快速检查点：
+
+- 首先查看 `docs/board-cyberai-toy-lily-4G-2.md`（本文件）和 `main/boards/cyberai-toy-lily-4G-2/config.h`。 
+- 需要修改运行时行为时优先在 `dual-screen.cc` 中查找相应初始化或回调代码。
+
 ```
 
 ## 双屏板硬件介绍
@@ -26,7 +77,7 @@
 
 - **主控芯片**: ESP32-S3 (QFN56)
 - **内存**: 8MB PSRAM
-- **显示**: 双1.3英寸GC9D01 LCD屏幕 (240x240分辨率)
+- **显示**: 双0.71英寸GC9D01 LCD屏幕 (160x160分辨率)
 - **触摸**: 支持触摸输入
 - **音频**: 内置音频编解码器和麦克风
 - **传感器**: QMI8658 6轴姿态传感器
@@ -65,15 +116,67 @@
 8. **触摸交互**: 支持触摸输入
 9. **电源管理**: 支持电池电量检测和充电管理
 
+
 ### 表情资源配置
 
-双屏板支持自定义GIF表情，主要通过以下方式配置：
+设备支持把自定义的 GIF 表情编译进固件并在运行时显示，
+你可以把自己的动画放到根目录的 `left` 文件夹来覆盖默认资源。
 
-1. **left目录**: 将左侧屏幕的表情GIF文件放在项目根目录的`left`文件夹中
-2. **表情命名**: 表情文件需要使用特定的名称，如`happy.gif`、`sad.gif`等
-3. **表情尺寸**: 表情文件尺寸应为160x160像素
-4. **支持的表情名称**: neutral, happy, laughing, funny, sad, angry, crying, loving, embarrassed, surprised, shocked, thinking, winking, cool, relaxed, delicious, kissy, confident, sleepy, silly, confused
-更多配置在README_FIX_EMOJI.md中
+**资源要求**
+
+- **格式**: GIF
+- **尺寸**: 160×160 像素
+- **名称**: 使用表情关键词作为文件名（不带扩展名自动添加 `.gif`）
+
+  支持的预设表情名称列表：
+  > neutral, happy, laughing, funny, sad, angry, crying, loving, embarrassed, 
+  surprised, shocked, thinking, winking, cool, relaxed, delicious, kissy,
+  confident, sleepy, silly, confused
+
+- 单个文件大小建议不超过 500 KB，以免固件体积过大。
+
+**目录结构示例**
+
+```
+/esp-project/binocular-display-of-lily-rabbit/
+├── left/
+│   ├── happy.gif
+│   ├── sad.gif
+│   └── ... 其他表情文件
+├── main/
+├── scripts/
+└── ... 其他项目文件
+```
+
+> 也可以阅读 [`README_FIX_EMOJI.md`](README_FIX_EMOJI.md) 获取更详细的配置指南。
+
+**配置流程**
+
+1. 准备好符合要求的 GIF 文件并放入 `left` 目录。
+2. 构建系统会自动扫描该目录，并在 `assets.bin` 中打包这些表情。
+   无需手动修改 CMakeLists.txt 或代码。
+3. 使用 `idf.py build` 重新生成固件并 `idf.py flash` 烧录。
+
+**验证与故障排除**
+
+- 烧录完成后，设备启动时应能在日志中看到表情加载成功的消息。
+- 若表情未显示：
+  - 检查 `left` 目录是否存在正确的 GIF 文件。
+  - 文件名是否与支持列表一致。
+  - 大小是否超过限制或被损坏。
+  - 查看构建输出，确认资源已被处理。
+  - 使用 `idf.py monitor` 查看运行时日志以定位加载错误。
+
+- 构建失败时，请检查 CMake 文件语法、依赖是否齐全，或参考构建日志。
+
+
+### 背光调整
+
+双屏板支持调整屏幕背光亮度：
+
+1. **默认亮度**: 默认背光亮度为90（范围0-100）
+2. **亮度持久化**: 亮度设置会保存在设备中，重启后恢复
+3. **两侧屏幕独立控制**: 左侧和右侧屏幕的背光可以独立调整
 
 ### 背光调整
 
@@ -98,6 +201,13 @@
 git clone <项目地址>
 cd /esp-project/binocular-display-of-lily-rabbit
 
+#选择板级文件
+(Top) → Xiaozhi Assistant → Default Language 
+在选择语言后（汉语、英语、俄语）
+(Top) → Xiaozhi Assistant → Board Type 
+选择WIFI板/4G板
+
+
 # 构建项目
 idf.py build
 ```
@@ -114,9 +224,14 @@ idf.py -p /dev/ttyACM0 monitor
 
 ### 4. 配置表情资源
 
-1. 将自定义GIF表情文件放入项目根目录的`left`文件夹中
-2. 确保表情文件名称与支持的表情名称一致
-3. 重新构建和烧录项目
+在项目根目录下创建或更新 `left` 文件夹并放入符合要求的 GIF 文件。构建过程会自动包含这些表情。
+
+1. 将自定义 GIF 表情放入 `left` 目录。
+2. 确保名称与支持列表一致，并且尺寸为 160×160。
+3. 运行 `idf.py build` 并 `idf.py flash` 将固件烧录到设备。
+4. 使用 `idf.py monitor` 检查启动日志，确认表情加载成功。
+
+如果需要更详细的配置步骤和故障排除建议，请参阅 [`README_FIX_EMOJI.md`](README_FIX_EMOJI.md)。
 
 ## 开发指南
 
