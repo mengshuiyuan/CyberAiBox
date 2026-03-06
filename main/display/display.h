@@ -47,6 +47,7 @@ public:
 
     virtual void SetMusicInfo(const char* song_name){};
 
+    virtual void BootPhaseShow(bool en){};//在开机阶段可以显示文字
 protected:
     int width_ = 0;
     int height_ = 0;

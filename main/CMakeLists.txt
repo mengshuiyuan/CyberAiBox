@@ -41,7 +41,10 @@ set(SOURCES "audio/audio_codec.cc"
 set(INCLUDE_DIRS "." "display" "display/lvgl_display" "display/lvgl_display/jpg" "audio" "protocols" "boards/cyberai-toy-lily-wifi-2")
 
 # Add board common files
-file(GLOB BOARD_COMMON_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/boards/common/*.cc)
+file(
+    GLOB BOARD_COMMON_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/boards/common/*.cc
+    GLOB BOARD_COMMON_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/boards/common/*.c
+    )
 list(APPEND SOURCES ${BOARD_COMMON_SOURCES})
 list(APPEND INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/boards/common)
 
@@ -74,7 +77,7 @@ elseif(CONFIG_BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN)
     set(BUILTIN_TEXT_FONT font_puhui_16_4)
     set(BUILTIN_ICON_FONT font_awesome_16_4)
     set(DEFAULT_EMOJI_COLLECTION twemoji_64)
-elseif(CONFIG_BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN)
+elseif(CONFIG_BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU)
     set(BOARD_TYPE "cyberai-toy-lily-wifi-2-RU")
     set(BUILTIN_TEXT_FONT font_puhui_16_4)
     set(BUILTIN_ICON_FONT font_awesome_16_4)

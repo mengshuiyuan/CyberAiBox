@@ -46,7 +46,7 @@ def merge_bin() -> None:
 
 def zip_bin(name: str, version: str) -> None:
     """Zip build/merged-binary.bin to releases/v{version}_{name}.zip"""
-    out_dir = Path("releases")
+    out_dir = Path("releases/2033")
     out_dir.mkdir(exist_ok=True)
     output_path = out_dir / f"v{version}_{name}.zip"
 
@@ -158,7 +158,7 @@ def release(board_type: str, config_filename: str = "config.json", *, filter_nam
         if not name.startswith(board_type):
             raise ValueError(f"build.name {name} 必须以 {board_type} 开头")
 
-        output_path = Path("releases") / f"v{project_version}_{name}.zip"
+        output_path = Path("releases/2033") / f"v{project_version}_{name}.zip"
         if output_path.exists():
             print(f"跳过 {name} 因为 {output_path} 已存在")
             continue

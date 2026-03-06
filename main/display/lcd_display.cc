@@ -782,7 +782,7 @@ void LcdDisplay::SetupUI() {
     lv_obj_set_style_pad_right(status_bar_, lvgl_theme->spacing(4), 0);
     lv_obj_set_style_border_width(status_bar_, 0, 0);
     lv_obj_set_style_pad_column(status_bar_, 0, 0);
-    lv_obj_add_flag(status_bar_, LV_OBJ_FLAG_HIDDEN);
+    //lv_obj_add_flag(status_bar_, LV_OBJ_FLAG_HIDDEN);
     
     /* Content */
     content_ = lv_obj_create(container_);
@@ -824,7 +824,7 @@ void LcdDisplay::SetupUI() {
     lv_label_set_long_mode(chat_message_label_, LV_LABEL_LONG_WRAP); // 设置为自动换行模式
     lv_obj_set_style_text_align(chat_message_label_, LV_TEXT_ALIGN_CENTER, 0); // 设置文本居中对齐
     lv_obj_set_style_text_color(chat_message_label_, lvgl_theme->text_color(), 0);
-    lv_obj_add_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN);
+    //lv_obj_add_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN);
 
     /* Status bar */
     network_label_ = lv_label_create(status_bar_);
@@ -864,7 +864,7 @@ void LcdDisplay::SetupUI() {
     lv_obj_set_style_radius(low_battery_popup_, lvgl_theme->spacing(4), 0);
     
     low_battery_label_ = lv_label_create(low_battery_popup_);
-    lv_label_set_text(low_battery_label_, "电量低，即将关机");
+    lv_label_set_text(low_battery_label_, Lang::Strings::BATTERY_NEED_CHARGE);
     lv_obj_set_style_text_color(low_battery_label_, lv_color_white(), 0);
     lv_obj_center(low_battery_label_);
     lv_obj_add_flag(low_battery_popup_, LV_OBJ_FLAG_HIDDEN);
@@ -1126,4 +1126,26 @@ void LcdDisplay::SetTheme(Theme* theme) {
 
     // No errors occurred. Save theme to settings
     Display::SetTheme(lvgl_theme);
+}
+
+void LcdDisplay::BootPhaseShow(bool en)
+{
+    if(en)
+    {
+        if( lv_obj_has_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN))
+        {
+            lv_obj_remove_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_remove_flag(status_bar_, LV_OBJ_FLAG_HIDDEN);
+        }
+        
+    }
+    else
+    {
+        if( !lv_obj_has_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN))
+        {
+            lv_obj_add_flag(chat_message_label_, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(status_bar_, LV_OBJ_FLAG_HIDDEN);
+        }
+        
+    }
 }

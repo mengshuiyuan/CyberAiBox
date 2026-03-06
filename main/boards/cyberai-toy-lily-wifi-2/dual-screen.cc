@@ -271,21 +271,22 @@ private:
             //         wifi_board.ResetWifiConfiguration();
             //     }
             // }
+            if (app.GetDeviceState() == kDeviceStateStarting) {
+                    // cast to WifiBoard
+                    auto& wifi_board = static_cast<WifiBoard&>(GetCurrentBoard());
+                    wifi_board.ResetWifiConfiguration();
+            }
             if(GetMusic()->MusicPlaying())
             {
                 GetMusic()->StopStreaming();
             }
-
             app.WakeWordInvoke(Lang::Strings::HELLO_ARE_YOU_HERE);
             app.ToggleChatState();
         });
         boot_button_.OnDoubleClick([this]() {
             auto& app = Application::GetInstance();
-            if (app.GetDeviceState() == kDeviceStateStarting || app.GetDeviceState() == kDeviceStateWifiConfiguring) {
-                //SwitchNetworkType();
-            }
             if (GetNetworkType() == NetworkType::WIFI) {
-                if (app.GetDeviceState() == kDeviceStateIdle) {
+                if (app.GetDeviceState() == kDeviceStateIdle || app.GetDeviceState() == kDeviceStateStarting) {
                     // cast to WifiBoard
                     auto& wifi_board = static_cast<WifiBoard&>(GetCurrentBoard());
                     wifi_board.ResetWifiConfiguration();
@@ -440,6 +441,12 @@ private:
         gpio_set_level(EN_4G , 1); 
         ESP_LOGI(TAG,"使能4G 14引脚电平2: %d", gpio_get_level(GPIO_NUM_14));
         vTaskDelay(pdMS_TO_TICKS(100)); 
+
+        if (GetNetworkType() != NetworkType::WIFI) {
+            auto& wifi_board = static_cast<WifiBoard&>(GetCurrentBoard());
+            SwitchNetworkType();
+        }
+
         // gpio_config_t config = {
         //     .pin_bit_mask = (1ULL << GPIO_NUM_11),
         //     .mode = GPIO_MODE_OUTPUT,

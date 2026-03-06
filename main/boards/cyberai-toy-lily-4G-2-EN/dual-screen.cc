@@ -5,6 +5,7 @@
 #include "display/lcd_display.h"
 #include "display/emote_display.h"
 #include "application.h"
+
 #include "qmi8658.h"//姿态传感器
 #include "button.h"
 #include "config.h"

@@ -52,8 +52,9 @@
         "DOWNLOAD_ASSETS_FAILED": "Failed to download assets",
         "LOADING_ASSETS": "Loading assets...",
         "HELLO_MY_FRIEND": "Hello, my friend!",
-        "HELLO_ARE_YOU_HERE":"Hello, are you there?",
-         "SHAKE":"If I shake you, what will you do",
-        "SHAKE_AWAKE":"If I wake you up, what will you do"
+        "HELLO_ARE_YOU_HERE":"Hello",
+         "SHAKE":"I'm shaking you",
+        "SHAKE_AWAKE":"I'm shaking you",
+        "SHUTTING_DOWN":"Shutting down soon"
     }
 }

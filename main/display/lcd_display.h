@@ -50,6 +50,8 @@ public:
     virtual void ShowLowPower(bool show) override;
     // Add theme switching function
     virtual void SetTheme(Theme* theme) override;
+
+    virtual void BootPhaseShow(bool en) override;
 };
 
 // SPI LCD显示器

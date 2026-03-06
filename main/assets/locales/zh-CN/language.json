@@ -40,7 +40,7 @@
         "BATTERY_LOW": "电量不足",
         "BATTERY_CHARGING": "正在充电",
         "BATTERY_FULL": "电量已满",
-        "BATTERY_NEED_CHARGE": "电量低，请充电",
+        "BATTERY_NEED_CHARGE": "电量低",
         "VOLUME": "音量 ",
         "MUTED": "已静音",
         "MAX_VOLUME": "最大音量",
@@ -53,6 +53,7 @@
         "HELLO_MY_FRIEND": "你好，我的朋友！",
         "HELLO_ARE_YOU_HERE":"你好，在吗?",
         "SHAKE":"摇晃你,你怎么办",
-        "SHAKE_AWAKE":"晃醒你,你怎么办"
+        "SHAKE_AWAKE":"晃醒你,你怎么办",
+        "SHUTTING_DOWN":"即将关机"
     }
 }
