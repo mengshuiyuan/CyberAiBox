@@ -35,3 +35,4 @@ dependencies:
   waveshare/qmi8658: ==1.0.0
   espressif/i2c_bus: "^1.5.0"
   chmorgan/esp-libhelix-mp3: ^1.0.3
+  espressif/esp_lcd_gc9a01: ^2.0.4

@@ -86,29 +86,39 @@ choice BOARD_TYPE
     help
         Board type. 开发板类型
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI
-        bool "双目盒子WIFI_中文"
+        bool "0.71寸-双目盒子WIFI_中文"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_ZH_CN
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN
-        bool "双目盒子WIFI_英语"
+        bool "0.71寸-双目盒子WIFI_英语"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_EN_US
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU
-        bool "双目盒子WIFI_俄语"
+        bool "0.71寸-双目盒子WIFI_俄语"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_RU_RU
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G
-        bool "双目盒子4G-中文"
+        bool "0.71寸-双目盒子4G-中文"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_ZH_CN
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_EN
-        bool "双目盒子4G-英语"
+        bool "0.71寸-双目盒子4G-英语"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_EN_US
     config BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_RU
-        bool "双目盒子4G-俄语"
+        bool "0.71寸-双目盒子4G-俄语"
         depends on IDF_TARGET_ESP32S3
         depends on LANGUAGE_RU_RU
+    config BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_4G
+        bool "1.28寸-双目盒子4G-中文"
+        depends on IDF_TARGET_ESP32S3
+        depends on LANGUAGE_ZH_CN
+    config BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_WIFI
+        bool "1.28寸-双目盒子WIFI-中文"
+        depends on IDF_TARGET_ESP32S3
+        depends on LANGUAGE_ZH_CN    
+
+    
 endchoice
 
 choice DISPLAY_STYLE
@@ -125,7 +135,7 @@ choice DISPLAY_STYLE
 
     config USE_EMOTE_MESSAGE_STYLE
         bool "Emote animation style"
-        depends on BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_RU
+        depends on BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_RU ||BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_WIFI ||BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_4G
 endchoice
 
 choice WAKE_WORD_TYPE
@@ -199,7 +209,7 @@ config USE_AUDIO_PROCESSOR
 config USE_DEVICE_AEC
     bool "Enable Device-Side AEC"
     default n
-        depends on USE_AUDIO_PROCESSOR && (BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_RU)
+        depends on USE_AUDIO_PROCESSOR && (BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_WIFI_RU || BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_EN ||BOARD_TYPE_DUAL_SCREEN_BOX_CYBERAI_4G_RU ||BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_WIFI ||BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_4G)
     help
         To work properly, device-side AEC requires a clean output reference path from the speaker signal and physical acoustic isolation between the microphone and speaker.
 

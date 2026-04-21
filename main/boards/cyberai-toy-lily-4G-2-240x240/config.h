@@ -1,0 +1,103 @@
+#ifndef _BOARD_CONFIG_H_
+#define _BOARD_CONFIG_H_
+
+// AtomMatrix+EchoBase Board configuration
+
+#include <driver/gpio.h>
+
+#define AUDIO_INPUT_SAMPLE_RATE  24000
+#define AUDIO_OUTPUT_SAMPLE_RATE 24000
+
+// #define AUDIO_I2S_GPIO_MCLK GPIO_NUM_17
+// #define AUDIO_I2S_GPIO_WS GPIO_NUM_7
+// #define AUDIO_I2S_GPIO_BCLK GPIO_NUM_15
+// #define AUDIO_I2S_GPIO_DIN  GPIO_NUM_6
+// #define AUDIO_I2S_GPIO_DOUT GPIO_NUM_16
+
+// #define AUDIO_CODEC_I2C_SDA_PIN  GPIO_NUM_4
+// #define AUDIO_CODEC_I2C_SCL_PIN  GPIO_NUM_5
+
+#define AUDIO_I2S_GPIO_MCLK GPIO_NUM_1
+#define AUDIO_I2S_GPIO_WS GPIO_NUM_44
+#define AUDIO_I2S_GPIO_BCLK GPIO_NUM_43
+#define AUDIO_I2S_GPIO_DIN  GPIO_NUM_2
+#define AUDIO_I2S_GPIO_DOUT GPIO_NUM_42
+
+#define AUDIO_CODEC_I2C_SDA_PIN  GPIO_NUM_7
+#define AUDIO_CODEC_I2C_SCL_PIN  GPIO_NUM_6
+#define AUDIO_CODEC_ES8311_ADDR  ES8311_CODEC_DEFAULT_ADDR
+#define AUDIO_CODEC_ES7210_ADDR  ES7210_CODEC_DEFAULT_ADDR
+#define AUDIO_CODEC_PA_PIN       GPIO_NUM_48                   //                     GPIO_NUM_18
+#define AUDIO_INPUT_REFERENCE    true
+
+#define BOOT_BUTTON_GPIO        GPIO_NUM_0//GPIO_NUM_47
+
+#define DISPLAY_WIDTH   240
+#define DISPLAY_HEIGHT  240
+
+#define DISPLAY_SPI_SCLK_PIN GPIO_NUM_18
+#define DISPLAY_SPI_MOSI_PIN GPIO_NUM_17//GPIO_NUM_42
+
+#define DISPLAY_SPI_DC_PIN GPIO_NUM_3
+#define DISPLAY_SPI_RESET_PIN GPIO_NUM_16//GPIO_NUM_44
+
+// #define DISPLAY_SPI_SCLK_PIN GPIO_NUM_15
+// #define DISPLAY_SPI_MOSI_PIN GPIO_NUM_14
+
+// #define DISPLAY_SPI_DC_PIN GPIO_NUM_17
+// #define DISPLAY_SPI_RESET_PIN GPIO_NUM_13
+
+#define DISPLAY_SWAP_XY  false
+#define DISPLAY_MIRROR_X true
+#define DISPLAY_MIRROR_Y false
+#define DISPLAY_OFFSET_X  0
+#define DISPLAY_OFFSET_Y  0
+#define DISPLAY_BACKLIGHT_OUTPUT_INVERT false
+
+// #define DISPLAY_BACKLIGHT_PIN GPIO_NUM_18
+// #define DISPLAY_MOSI_PIN      GPIO_NUM_14
+// #define DISPLAY_CLK_PIN       GPIO_NUM_15
+// #define DISPLAY_DC_PIN        GPIO_NUM_17
+// #define DISPLAY_RST_PIN       GPIO_NUM_13
+// #define DISPLAY_CS_PIN        GPIO_NUM_16
+
+
+// Display configuration for GC9D01
+//左屏
+#define DISPLAY_LEFT_SPI_CS_PIN GPIO_NUM_8
+#define DISPLAY_LEFT_BACKLIGHT_PIN GPIO_NUM_46
+
+// #define DISPLAY_LEFT_SPI_CS_PIN GPIO_NUM_16
+// #define DISPLAY_LEFT_BACKLIGHT_PIN GPIO_NUM_18
+//右屏
+#define DISPLAY_RIGHT_SPI_CS_PIN GPIO_NUM_9
+#define DISPLAY_RIGHT_BACKLIGHT_PIN GPIO_NUM_10
+#define LCD_SPI_PCLK_HZ          80000000
+
+
+// Battery monitoring configuration
+#define VBAT_ADC_CHANNEL         ADC_CHANNEL_2  // S3: IO3
+//#define CHARGE_DETECT_PIN        GPIO_NUM_14     // 充电检测引脚 低电平
+#define CHARGE_STDBY_PIN         GPIO_NUM_13    //充电完成 低电平
+#define ADC_ATTEN                ADC_ATTEN_DB_12
+#define ADC_WIDTH                ADC_BITWIDTH_DEFAULT
+#define FULL_BATTERY_VOLTAGE     4100
+#define EMPTY_BATTERY_VOLTAGE    3200
+
+
+//4G
+#define EN_4G                    GPIO_NUM_14//GPIO_NUM_48 //4G使能，低电平导通，高电平关闭
+#define ML307_TX_PIN             GPIO_NUM_38
+#define ML307_RX_PIN             GPIO_NUM_39
+
+//触摸
+#define TOUCH_1                  4
+#define TOUCH_2                  5
+#define IDLE_SHUTDOWN_TIME       30000
+
+#define TOUCH_BUTTON             GPIO_NUM_NC//GPIO_NUM_2
+
+// A MCP Test: Control a lamp
+#define RGB_GPIO GPIO_NUM_15
+
+#endif // _BOARD_CONFIG_H_

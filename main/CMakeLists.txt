@@ -102,6 +102,17 @@ elseif(CONFIG_BOARD_TYPE_ECHOEAR)
     set(BUILTIN_TEXT_FONT font_puhui_20_4)
     set(BUILTIN_ICON_FONT font_awesome_20_4)
     set(DEFAULT_EMOJI_COLLECTION twemoji_64)
+elseif(CONFIG_BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_WIFI)
+    set(BOARD_TYPE "cyberai-toy-lily-wifi-2-240x240")
+    set(BUILTIN_TEXT_FONT font_puhui_16_4)
+    set(BUILTIN_ICON_FONT font_awesome_16_4)
+    set(DEFAULT_EMOJI_COLLECTION twemoji_64)
+elseif(CONFIG_BOARD_TYPE_LARGE_DUAL_SCREEN_BOX_CYBERAI_4G)
+    set(BOARD_TYPE "cyberai-toy-lily-4G-2-240x240")
+    set(BUILTIN_TEXT_FONT font_puhui_16_4)
+    set(BUILTIN_ICON_FONT font_awesome_16_4)
+    set(DEFAULT_EMOJI_COLLECTION twemoji_64)
+
 
 endif()
 
